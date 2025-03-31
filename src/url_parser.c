@@ -56,6 +56,8 @@ int parse_url(url_t * dst_url, const char * url_string) {
     // safely copy buffers to respective fields
     strncpy(dst_url->hostname, hostname_buff, host_len);
     strncpy(dst_url->pathname, pathname_buff, path_len);
-
+    
+    dst_url->port = 80;
+    
     return 0;  
 }

@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <netdb.h>
 
 #include "socket_setup.h"
 
 struct sockaddr_in * sckt_addr;
-struct addrinfo * hints, * res;
+struct addrinfo hints, * res;
 
 int create_socket() { // HTTP SOCKET
     int socket_id = socket(AF_INET, SOCK_STREAM, 0);
@@ -18,11 +20,11 @@ int create_socket() { // HTTP SOCKET
 }
 
 int resolve_host(url_t * url) {
-    memset(hints, 0, sizeof(*hints));
-    hints->ai_family = AF_INET;
-    hints->ai_socktype = SOCK_STREAM;
-    hints->ai_flags = AI_CANONNAME;
-    if (getaddrinfo(url->hostname, NULL, hints, &res) == -1) {
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_flags = AI_CANONNAME;
+    if (getaddrinfo(url->hostname, NULL, &hints, &res) == -1) {
         perror("The hostname could not be resolved");
         return -1; // error
     } 
