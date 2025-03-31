@@ -9,8 +9,8 @@ typedef struct {
 	int port;
 } url_t;
 
-int parse_hostname(char * dest, char * source);
-int parse_pathname(char * dest, char * source, int host_len);
+int parse_hostname(char * dest, const char * source);
+int parse_pathname(char * dest, const char * source, int host_len);
 int parse_url(url_t * dst_url, const char * source);
 
 #endif
