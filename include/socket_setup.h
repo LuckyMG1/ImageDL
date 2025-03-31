@@ -8,6 +8,6 @@
 
 int create_socket();
 int resolve_host(url_t * url);
-int connect_to_host(url_t *url, struct addrinfo *res, int sckt_id);
+int connect_to_host(int sckt_id, url_t * url);
 
 #endif
