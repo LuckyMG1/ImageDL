@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude
+CFLAGS = -Wall -Wextra -Iinclude
 SRC = src/main.c src/url_parser.c src/socket_setup.c src/communication.c
 OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
-OUT = build/program
+OUT = build/imagedl
 
 all: build $(OUT)
 
