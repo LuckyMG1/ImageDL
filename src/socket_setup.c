@@ -29,7 +29,7 @@ int resolve_host(url_t * url) {
     return 0; // success
 }
 
-int connect_to_host(url_t *url, struct addrinfo *res, int sckt_id)
+int connect_to_host(int sckt_id, url_t * url)
 {
     int connect_id;
     sckt_addr = (struct sockaddr_in *) res->ai_addr;
