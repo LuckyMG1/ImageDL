@@ -1,10 +1,13 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "url_parser.h"
 
-char hostname_buff[256], filename_buff[256];
+char hostname_buff[256], pathname_buff[256];
 int host_len, path_len;
 
 int parse_hostname(char * dest, const char * source) {
-    char * ch = source;
+    char * ch = (char *) source;
     int len = 0;
     // skip over protocol
     while (*ch != '\0' && *ch != ':') ch++;
@@ -19,9 +22,9 @@ int parse_hostname(char * dest, const char * source) {
     return len;
 }
 
-int parse_pathname(char * dest, char * source, int host_len) {
+int parse_pathname(char * dest, const char * source, int host_len) {
     int len = 0;
-    char * ch = source;
+    char * ch = (char *) source;
     while (*ch != ':') {
         ch++;
     }
@@ -32,7 +35,7 @@ int parse_pathname(char * dest, char * source, int host_len) {
     return len;
 }
 
-int parse_url(url_t * result, const char * url_string) {
+int parse_url(url_t * dst_url, const char * url_string) {
     // get hostname and pathname from url_string
     host_len = parse_hostname(hostname_buff, url_string);
     if (host_len == -1) {
@@ -46,13 +49,13 @@ int parse_url(url_t * result, const char * url_string) {
         return -1;
     }
     
-    // zero out memory in url_t result
-    memset(result->hostname, 0, sizeof(result->hostname));
-    memset(result->pathname, 0, sizeof(result->pathname));
+    // zero out memory in url_t dst_url
+    memset(dst_url->hostname, 0, sizeof(dst_url->hostname));
+    memset(dst_url->pathname, 0, sizeof(dst_url->pathname));
 
     // safely copy buffers to respective fields
-    strncpy(result->hostname, hostname_buff, host_len);
-    strncpy(result->pathname, pathname_buff, path_len);
+    strncpy(dst_url->hostname, hostname_buff, host_len);
+    strncpy(dst_url->pathname, pathname_buff, path_len);
 
     return 0;  
 }
